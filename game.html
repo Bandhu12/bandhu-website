@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Number Guessing Game</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #141e30, #243b55);
+            color: rgb(207, 143, 143);
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        .game {
+            background: #27e07b;
+            color: #222;
+            width: 320px;
+            margin: auto;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        input {
+           background: #d59b9b;
+            width: 80%;
+            padding: 12px;
+            font-size: 18px;
+            margin: 10px;
+            border: 2px solid #007bff;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        button {
+            padding: 12px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        #message {
+            font-size: 17px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="game">
+        <h1>🎯 Guess the Number</h1>
+
+        <p>Guess a number between 1 and 100.</p>
+
+        <input
+            type="number"
+            id="guess"
+            min="1"
+            max="100"
+            placeholder="Enter your guess"
+        >
+
+        <br>
+
+        <button onclick="checkGuess()">Guess</button>
+        <button onclick="restartGame()">Restart</button>
+
+        <p id="message">Good luck! 🎮</p>
+        <p>Attempts: <span id="attempts">0</span></p>
+    </div>
+
+    <script>
+        let secretNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+        let gameOver = false;
+
+        function checkGuess() {
+            if (gameOver) {
+                document.getElementById("message").textContent =
+                    "Click Restart to play again!";
+                return;
+            }
+
+            let guess = Number(document.getElementById("guess").value);
+            let message = document.getElementById("message");
+
+            if (
+                document.getElementById("guess").value === "" ||
+                !Number.isInteger(guess) ||
+                guess < 1 ||
+                guess > 100
+            ) {
+                message.textContent =
+                    "Please enter a whole number from 1 to 100!";
+                return;
+            }
+
+            attempts++;
+            document.getElementById("attempts").textContent = attempts;
+
+            if (guess === secretNumber) {
+                message.textContent =
+                    "🎉 Correct! You won in " + attempts + " attempts!";
+                gameOver = true;
+            } else if (guess < secretNumber) {
+                message.textContent = "📈 Too low! Try a bigger number.";
+            } else {
+                message.textContent = "📉 Too high! Try a smaller number.";
+            }
+
+            document.getElementById("guess").value = "";
+        }
+
+        function restartGame() {
+            secretNumber = Math.floor(Math.random() * 100) + 1;
+            attempts = 0;
+            gameOver = false;
+
+            document.getElementById("attempts").textContent = 0;
+            document.getElementById("message").textContent =
+                "New game! Good luck! 🎮";
+            document.getElementById("guess").value = "";
+        }
+    </script>
+    <p><a href="Untitled-1.HTML">Back to Home</a></p>
+
+</body>
+</html>
